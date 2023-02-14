@@ -1,9 +1,37 @@
 import './App.css';
 import { Typography, TextField, Box, Button } from '@mui/material';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+
+interface formData {
+	firstName: string;
+	lastName: string;
+	email: string;
+	address: string;
+	password: string;
+	confirmPassword: string;
+}
 
 function App() {
-	const handleSubmit = () => {
-		console.log('asd');
+	const [formData, setFormDate] = useState<formData>({
+		firstName: '',
+		lastName: '',
+		email: '',
+		address: '',
+		password: '',
+		confirmPassword: '',
+	});
+
+	const signUp = useMutation({
+		mutationFn: async (allFormData: formData) => {
+			await axios.post(`/register`, allFormData);
+		},
+	});
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		signUp.mutate(formData);
 	};
 
 	return (
@@ -20,14 +48,66 @@ function App() {
 				sx={{ backgroundColor: '#f5f5f5', m: '1rem auto 0 auto' }}
 				padding={4}
 				borderRadius={10}
-				onSubmit={handleSubmit}>
-				<TextField label='First Name' />
-				<TextField sx={{ mt: 2 }} label='Last Name' />
-				<TextField sx={{ mt: 2 }} label='E-mail' />
-				<TextField sx={{ mt: 2 }} label='Address' />
-				<TextField sx={{ mt: 2 }} label='Password' />
-				<TextField sx={{ mt: 2 }} label='Confirm Password' />
-				<Button sx={{ marginTop: 2 }} variant='contained'>
+				onSubmit={(e) => handleSubmit(e)}
+				autoComplete='off'>
+				<TextField
+					required
+					type='text'
+					value={formData.firstName}
+					onChange={(e) =>
+						setFormDate({ ...formData, firstName: e.target.value })
+					}
+					label='First Name'
+				/>
+				<TextField
+					required
+					type='text'
+					value={formData.lastName}
+					onChange={(e) =>
+						setFormDate({ ...formData, lastName: e.target.value })
+					}
+					sx={{ mt: 2 }}
+					label='Last Name'
+				/>
+				<TextField
+					required
+					type='email'
+					value={formData.email}
+					onChange={(e) => setFormDate({ ...formData, email: e.target.value })}
+					sx={{ mt: 2 }}
+					label='E-mail'
+				/>
+				<TextField
+					required
+					type='text'
+					value={formData.address}
+					onChange={(e) =>
+						setFormDate({ ...formData, address: e.target.value })
+					}
+					sx={{ mt: 2 }}
+					label='Address'
+				/>
+				<TextField
+					required
+					type='text'
+					value={formData.password}
+					onChange={(e) =>
+						setFormDate({ ...formData, password: e.target.value })
+					}
+					sx={{ mt: 2 }}
+					label='Password'
+				/>
+				<TextField
+					required
+					type='text'
+					value={formData.confirmPassword}
+					onChange={(e) =>
+						setFormDate({ ...formData, confirmPassword: e.target.value })
+					}
+					sx={{ mt: 2 }}
+					label='Confirm Password'
+				/>
+				<Button type='submit' sx={{ marginTop: 2 }} variant='contained'>
 					Submit
 				</Button>
 			</Box>
