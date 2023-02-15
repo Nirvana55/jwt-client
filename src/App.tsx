@@ -2,7 +2,7 @@ import './App.css';
 import { Typography, TextField, Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import axios from 'axios';
+import { API } from './config/axios';
 
 interface formData {
 	firstName: string;
@@ -25,7 +25,7 @@ function App() {
 
 	const signUp = useMutation({
 		mutationFn: async (allFormData: formData) => {
-			await axios.post(`/register`, allFormData);
+			await API.post(`v1/auth/register`, allFormData);
 		},
 	});
 
