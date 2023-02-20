@@ -32,6 +32,14 @@ function App() {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		signUp.mutate(formData);
+		setFormDate({
+			firstName: '',
+			lastName: '',
+			email: '',
+			address: '',
+			password: '',
+			confirmPassword: '',
+		});
 	};
 
 	return (
