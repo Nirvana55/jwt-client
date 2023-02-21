@@ -1,6 +1,7 @@
-import { Typography, TextField, Box, Button } from '@mui/material';
-import { useState } from 'react';
+import { TextField, Box, Button } from '@mui/material';
+import { useContext, useState } from 'react';
 import { useMutation } from 'react-query';
+import { SnackBarContext } from '../../App';
 import { API } from '../../config/axios';
 
 interface formData {
@@ -13,6 +14,8 @@ interface formData {
 }
 
 function SignUp() {
+	const { handleSnackBar, setIsHandleSnackBar } = useContext(SnackBarContext);
+
 	const [formData, setFormDate] = useState<formData>({
 		firstName: '',
 		lastName: '',
@@ -26,7 +29,30 @@ function SignUp() {
 		mutationFn: async (allFormData: formData) => {
 			await API.post(`v1/auth/register`, allFormData);
 		},
+		onSuccess: (data) => {
+			setIsHandleSnackBar({
+				...handleSnackBar,
+				open: true,
+				isSeverity: 'success',
+				isMessage: 'Hello ! Success',
+			});
+		},
+		onError: (err) => {
+			setIsHandleSnackBar({
+				...handleSnackBar,
+				open: true,
+				isSeverity: 'error',
+				isMessage: 'Hello ! Error',
+			});
+		},
 	});
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		e.preventDefault();
+		setFormDate({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -52,58 +78,54 @@ function SignUp() {
 				autoComplete='off'>
 				<TextField
 					required
+					name='firstName'
 					type='text'
 					value={formData.firstName}
-					onChange={(e) =>
-						setFormDate({ ...formData, firstName: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					label='First Name'
 				/>
 				<TextField
 					required
 					type='text'
+					name='lastName'
 					value={formData.lastName}
-					onChange={(e) =>
-						setFormDate({ ...formData, lastName: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Last Name'
 				/>
 				<TextField
 					required
+					name='email'
 					type='email'
 					value={formData.email}
-					onChange={(e) => setFormDate({ ...formData, email: e.target.value })}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='E-mail'
 				/>
 				<TextField
 					required
+					name='address'
 					type='text'
 					value={formData.address}
-					onChange={(e) =>
-						setFormDate({ ...formData, address: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Address'
 				/>
 				<TextField
 					required
-					type='text'
+					type='password'
+					name='password'
 					value={formData.password}
-					onChange={(e) =>
-						setFormDate({ ...formData, password: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Password'
 				/>
 				<TextField
 					required
-					type='text'
+					type='password'
+					name='confirmPassword'
 					value={formData.confirmPassword}
-					onChange={(e) =>
-						setFormDate({ ...formData, confirmPassword: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Confirm Password'
 				/>
