@@ -28,6 +28,13 @@ function SignUp() {
 		},
 	});
 
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		e.preventDefault();
+		setFormDate({ ...formData, [e.target.name]: e.target.value });
+	};
+
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		signUp.mutate(formData);
@@ -54,18 +61,14 @@ function SignUp() {
 					required
 					type='text'
 					value={formData.firstName}
-					onChange={(e) =>
-						setFormDate({ ...formData, firstName: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					label='First Name'
 				/>
 				<TextField
 					required
 					type='text'
 					value={formData.lastName}
-					onChange={(e) =>
-						setFormDate({ ...formData, lastName: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Last Name'
 				/>
@@ -73,7 +76,7 @@ function SignUp() {
 					required
 					type='email'
 					value={formData.email}
-					onChange={(e) => setFormDate({ ...formData, email: e.target.value })}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='E-mail'
 				/>
@@ -81,9 +84,7 @@ function SignUp() {
 					required
 					type='text'
 					value={formData.address}
-					onChange={(e) =>
-						setFormDate({ ...formData, address: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Address'
 				/>
@@ -91,9 +92,7 @@ function SignUp() {
 					required
 					type='text'
 					value={formData.password}
-					onChange={(e) =>
-						setFormDate({ ...formData, password: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Password'
 				/>
@@ -101,9 +100,7 @@ function SignUp() {
 					required
 					type='text'
 					value={formData.confirmPassword}
-					onChange={(e) =>
-						setFormDate({ ...formData, confirmPassword: e.target.value })
-					}
+					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
 					label='Confirm Password'
 				/>
