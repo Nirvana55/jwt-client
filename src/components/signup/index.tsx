@@ -1,6 +1,7 @@
-import { Typography, TextField, Box, Button } from '@mui/material';
-import { useState } from 'react';
+import { TextField, Box, Button } from '@mui/material';
+import { useContext, useState } from 'react';
 import { useMutation } from 'react-query';
+import { SnackBarContext } from '../../App';
 import { API } from '../../config/axios';
 
 interface formData {
@@ -13,6 +14,8 @@ interface formData {
 }
 
 function SignUp() {
+	const { handleSnackBar, setIsHandleSnackBar } = useContext(SnackBarContext);
+
 	const [formData, setFormDate] = useState<formData>({
 		firstName: '',
 		lastName: '',
@@ -25,6 +28,22 @@ function SignUp() {
 	const signUp = useMutation({
 		mutationFn: async (allFormData: formData) => {
 			await API.post(`v1/auth/register`, allFormData);
+		},
+		onSuccess: (data) => {
+			setIsHandleSnackBar({
+				...handleSnackBar,
+				open: true,
+				isSeverity: 'success',
+				isMessage: 'Hello ! Success',
+			});
+		},
+		onError: (err) => {
+			setIsHandleSnackBar({
+				...handleSnackBar,
+				open: true,
+				isSeverity: 'error',
+				isMessage: 'Hello ! Error',
+			});
 		},
 	});
 
@@ -59,6 +78,7 @@ function SignUp() {
 				autoComplete='off'>
 				<TextField
 					required
+					name='firstName'
 					type='text'
 					value={formData.firstName}
 					onChange={(e) => handleChange(e)}
@@ -67,6 +87,7 @@ function SignUp() {
 				<TextField
 					required
 					type='text'
+					name='lastName'
 					value={formData.lastName}
 					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
@@ -74,6 +95,7 @@ function SignUp() {
 				/>
 				<TextField
 					required
+					name='email'
 					type='email'
 					value={formData.email}
 					onChange={(e) => handleChange(e)}
@@ -82,6 +104,7 @@ function SignUp() {
 				/>
 				<TextField
 					required
+					name='address'
 					type='text'
 					value={formData.address}
 					onChange={(e) => handleChange(e)}
@@ -90,7 +113,8 @@ function SignUp() {
 				/>
 				<TextField
 					required
-					type='text'
+					type='password'
+					name='password'
 					value={formData.password}
 					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
@@ -98,7 +122,8 @@ function SignUp() {
 				/>
 				<TextField
 					required
-					type='text'
+					type='password'
+					name='confirmPassword'
 					value={formData.confirmPassword}
 					onChange={(e) => handleChange(e)}
 					sx={{ mt: 2 }}
