@@ -1,39 +1,11 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useContext, useState } from 'react';
-import { useMutation } from 'react-query';
-import { SnackBarContext } from '../../App';
-import { API } from '../../config/axios';
-
-interface LoginData {
-	email: string;
-	password: string;
-}
+import { useState } from 'react';
+import { useLoginUser } from '../../api/auth/mutation';
 
 const Login = () => {
-	const { handleSnackBar, setIsHandleSnackBar } = useContext(SnackBarContext);
 	const [loginData, setLoginDate] = useState({ email: '', password: '' });
 
-	const loginMutation = useMutation({
-		mutationFn: async (loginData: LoginData) => {
-			await API.post('/v1/auth/login', loginData);
-		},
-		onSuccess: (data) => {
-			setIsHandleSnackBar({
-				...handleSnackBar,
-				open: true,
-				isSeverity: 'success',
-				isMessage: 'Hello ! Success',
-			});
-		},
-		onError: (err) => {
-			setIsHandleSnackBar({
-				...handleSnackBar,
-				open: true,
-				isSeverity: 'error',
-				isMessage: 'Hello ! Error',
-			});
-		},
-	});
+	const loginMutation = useLoginUser();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
