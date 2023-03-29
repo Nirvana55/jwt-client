@@ -1,8 +1,6 @@
 import { TextField, Box, Button } from '@mui/material';
-import { useContext, useState } from 'react';
-import { useMutation } from 'react-query';
-import { SnackBarContext } from '../../App';
-import { API } from '../../config/axios';
+import { useState } from 'react';
+import { useSignUpUser } from '../../../api/auth/mutation';
 
 interface formData {
 	firstName: string;
@@ -14,8 +12,6 @@ interface formData {
 }
 
 function SignUp() {
-	const { handleSnackBar, setIsHandleSnackBar } = useContext(SnackBarContext);
-
 	const [formData, setFormDate] = useState<formData>({
 		firstName: '',
 		lastName: '',
@@ -25,27 +21,7 @@ function SignUp() {
 		confirmPassword: '',
 	});
 
-	const signUp = useMutation({
-		mutationFn: async (allFormData: formData) => {
-			await API.post(`v1/auth/register`, allFormData);
-		},
-		onSuccess: (data) => {
-			setIsHandleSnackBar({
-				...handleSnackBar,
-				open: true,
-				isSeverity: 'success',
-				isMessage: 'Hello ! Success',
-			});
-		},
-		onError: (err) => {
-			setIsHandleSnackBar({
-				...handleSnackBar,
-				open: true,
-				isSeverity: 'error',
-				isMessage: 'Hello ! Error',
-			});
-		},
-	});
+	const signUp = useSignUpUser();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
