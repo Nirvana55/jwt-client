@@ -1,6 +1,6 @@
 import { TextField, Box, Button } from '@mui/material';
 import { useState } from 'react';
-import { useSignUpUser } from '../../api/auth/mutation';
+import { useSignUpUser } from '../../../api/auth/mutation';
 
 interface formData {
 	firstName: string;

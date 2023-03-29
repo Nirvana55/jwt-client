@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
-import { useLoginUser } from '../../api/auth/mutation';
+import { useLoginUser } from '../../../api/auth/mutation';
 
 const Login = () => {
 	const [loginData, setLoginDate] = useState({ email: '', password: '' });
