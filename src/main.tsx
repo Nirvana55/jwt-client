@@ -5,6 +5,8 @@ import { QueryClientProvider } from 'react-query';
 import { QueryClient } from 'react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { routes } from './routes/index';
+import RootLayouts from './components/Layouts/RootLayouts';
+import CustomSuspense from './components/Suspense/CustomSuspense';
 
 const theme = createTheme({});
 
@@ -16,7 +18,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={theme}>
-				<RouterProvider router={routers} />
+				<RootLayouts>
+					<CustomSuspense>
+						<RouterProvider router={routers} />
+					</CustomSuspense>
+				</RootLayouts>
 			</ThemeProvider>
 		</QueryClientProvider>
 	</React.StrictMode>

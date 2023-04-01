@@ -1,10 +1,10 @@
 import SignUp from './signUp';
-import './App.css';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import Login from './login';
+import '../../App.css';
 
-function App() {
+function Authentication() {
 	const [isSignUp, setIsSignUp] = useState(true);
 
 	const handleIsSignUp = () => setIsSignUp((prev) => !prev);
@@ -34,4 +34,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Authentication;
