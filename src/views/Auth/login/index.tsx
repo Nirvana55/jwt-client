@@ -39,7 +39,7 @@ const Login = () => {
 				<TextField
 					name='password'
 					label='Password'
-					type='text'
+					type='password'
 					required
 					sx={{ mt: 2 }}
 					value={loginData.password}

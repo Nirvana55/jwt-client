@@ -1,11 +1,16 @@
 import { RouteObject } from 'react-router-dom';
-import App from '../App';
+import { lazy } from 'react';
 import CustomSuspense from '../components/Suspense/CustomSuspense';
 
-import Authentication from '../views/Auth/Auth';
-import DashboardLayout from '../components/Layouts/DashboardLayouts';
-import OutsideLayouts from '../components/Layouts/OutsideLayouts';
-import Dashboard from '../views/Dashboard';
+const App = lazy(() => import('../App'));
+const Authentication = lazy(() => import('../views/Auth/Auth'));
+const Dashboard = lazy(() => import('../views/Dashboard'));
+const DashboardLayout = lazy(
+	() => import('../components/Layouts/DashboardLayouts')
+);
+const OutsideLayouts = lazy(
+	() => import('../components/Layouts/OutsideLayouts')
+);
 
 export const routes: RouteObject[] = [
 	{
@@ -16,7 +21,7 @@ export const routes: RouteObject[] = [
 				element: <App />,
 			},
 			{
-				path: '/',
+				path: '/welcome',
 				element: (
 					<CustomSuspense>
 						<Dashboard />

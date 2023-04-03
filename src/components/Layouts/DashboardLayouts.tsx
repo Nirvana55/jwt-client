@@ -1,5 +1,5 @@
 import useStore from '../../store/useStore';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const DashboardLayouts = () => {
 	const isAuthenticated = useStore((state) => state.isAuth);
@@ -8,7 +8,7 @@ const DashboardLayouts = () => {
 		return <Navigate to='/auth' replace={true} />;
 	}
 
-	return <></>;
+	return <Outlet />;
 };
 
 export default DashboardLayouts;

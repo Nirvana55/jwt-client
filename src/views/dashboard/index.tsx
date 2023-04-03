@@ -1,5 +1,7 @@
+import { Typography } from '@mui/material';
+
 const Dashboard = () => {
-	return <div>Welcome</div>;
+	return <Typography variant='h1'>Welcome</Typography>;
 };
 
 export default Dashboard;
