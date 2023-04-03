@@ -6,7 +6,7 @@ const OutsideLayouts = () => {
 
 	if (isAuthenticated) {
 		return (
-			<Navigate to={isAuthenticated ? '/dashboard' : '/404'} replace={true} />
+			<Navigate to={isAuthenticated ? '/welcome' : '/404'} replace={true} />
 		);
 	}
 
