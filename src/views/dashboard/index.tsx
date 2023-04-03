@@ -1,7 +1,20 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { useLogOutUser } from '../../api/auth/mutation';
 
 const Dashboard = () => {
-	return <Typography variant='h1'>Welcome</Typography>;
-};
+	const logOut = useLogOutUser();
 
+	const handleLogOut = () => {
+		logOut.mutate();
+	};
+
+	return (
+		<>
+			<Typography variant='h1'>Welcome</Typography>
+			<Button variant='contained' onClick={handleLogOut}>
+				Log Out
+			</Button>
+		</>
+	);
+};
 export default Dashboard;

@@ -18,6 +18,11 @@ const loginUser = async (data: LoginType) => {
 	return res.data;
 };
 
+const logOutUser = async () => {
+	const res = await API.get('/v1/auth/logout');
+	return res.data;
+};
+
 export const useCheckUserSession = () => {
 	const setIsAuth = useStore((state) => state.setIsAuth);
 
@@ -44,4 +49,12 @@ export const useLoginUser = () => {
 		onError: () => console.log('asd'),
 	});
 };
-77;
+
+export const useLogOutUser = () => {
+	const checkUserSession = useCheckUserSession();
+
+	return useMutation(logOutUser, {
+		onSuccess: () => checkUserSession.mutate(),
+		onError: () => console.log('asd'),
+	});
+};
